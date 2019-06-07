@@ -23,13 +23,14 @@ class Classifier(nn.Module):
     def forward(self, x):
         #make sure input tensor is flattened
         x = x.view(x.shape[0],-1)
+
         x = self.dropout(F.relu(self.fc1(x)))
         x = self.dropout(F.relu(self.fc2(x)))
         x = self.dropout(F.relu(self.fc3(x)))
         # output so no dropout here
         x = F.log_softmax(self.fc4(x), dim=1)
         return x
-model = Classifier()
+'''model = Classifier()
 images , labels = next(iter(testloader))
 #Get the class probabilities
 ps = torch.exp(model(images))
@@ -45,7 +46,7 @@ equals = top_class == labels.view(*top_class.shape)
 #print(equals)
 #accuracy
 accuracy = torch.mean(equals.type(torch.FloatTensor))
-#print(accuracy.item()*100)
+#print(accuracy.item()*100)'''
 model = Classifier()
 criterion = nn.NLLLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.003)
